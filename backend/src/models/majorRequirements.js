@@ -8,12 +8,12 @@ const MajorRequirementsSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-    collection: "MajorRequirements2",
+    collection: "MajorRequirements",
   }
 );
 
 const MajorRequirements = mongoose.model(
-  "MajorRequirements2",
+  "MajorRequirements",
   MajorRequirementsSchema
 );
 

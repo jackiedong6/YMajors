@@ -5,25 +5,26 @@ import UserContext from "../../contexts/UserContext";
 import Button from "@mui/material/Button";
 
 const Logout = () => {
+  const { isAuthenticated, checkContext } = useContext(UserContext);
   const navigate = useNavigate();
-  const { checkContext } = useContext(UserContext);
-  return (
-    <Button
-      className="logout"
-      variant="outlined"
-      onClick={() =>
-        axios.get("/auth/logout").then(({ data }) => {
-          console.log(data);
-          if (data.success) {
-            checkContext();
-            navigate("/");
-          }
-        })
-      }
-    >
-      Logout
-    </Button>
-  );
+  if (isAuthenticated) {
+    return (
+      <Button
+        sx={{ color: "#fff" }}
+        className="logout"
+        onClick={() =>
+          axios.get("/auth/logout").then(({ data }) => {
+            if (data.success) {
+              checkContext();
+              navigate("/");
+            }
+          })
+        }
+      >
+        Logout
+      </Button>
+    );
+  }
 };
 
 export default Logout;

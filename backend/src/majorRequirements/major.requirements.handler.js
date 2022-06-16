@@ -1,21 +1,12 @@
 import MajorRequirements from "../models/majorRequirements.js";
 
 export default class majorRequirementsHandler {
-  static async getMajorRequirements({ filters = null } = {}) {
-    let query;
-    if (filters) {
-      if ("name" in filters) {
-        query = { $text: { $search: filters["name"] } };
-      }
-    }
-    let cursor;
-
+  static async getMajorRequirements(majorName) {
     try {
-      cursor = await MajorRequirements.findOne(query);
-      return cursor;
+      return await MajorRequirements.findOne({ name: majorName });
     } catch (e) {
-      console.error(`Unable to issue find command, ${e}`);
-      return { majorRequirements: [] };
+      console.error(`Unable to post course: ${e}`);
+      return { error: e };
     }
   }
 }

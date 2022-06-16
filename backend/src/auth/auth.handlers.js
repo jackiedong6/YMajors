@@ -19,6 +19,7 @@ export const passportConfig = async (passport) => {
           if (!doc) {
             const newUser = new User({
               netId: profile.id,
+              major: "",
             });
             await newUser.save();
             console.log("User Created");

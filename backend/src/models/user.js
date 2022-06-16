@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema(
   {
     netId: String,
+    major: String,
     courseList: Array,
   },
   {

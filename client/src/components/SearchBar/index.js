@@ -14,12 +14,6 @@ function SearchBar({ placeholder, data, onChange }) {
 
   const [major, setMajor] = useState("");
 
-  // const selectMajor = (smt) => {
-  //   const selectedMajor = smt.value;
-  //   console.log(smt.value);
-  //   setMajor(selectedMajor);
-  // };
-
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);

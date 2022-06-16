@@ -3,6 +3,7 @@
   justify-content: left;
 }
 .searchInputs {
+  margin: 10px 10px;
 }
 
 .search input {
@@ -36,7 +37,8 @@ input:focus {
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   overflow: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
+  z-index: 3;
   font-size: 15px;
 }
 
@@ -54,10 +56,6 @@ input:focus {
 }
 a {
   text-decoration: none;
-}
-
-a:hover {
-  background-color: lightgrey;
 }
 
 #clearBtn {

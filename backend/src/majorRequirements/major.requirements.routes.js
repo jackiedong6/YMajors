@@ -5,13 +5,9 @@ const router = express.Router();
 
 router.get("/major/requirements", async function (req, res, next) {
   try {
-    let filters = {};
-    if (req.query.name) {
-      filters.name = req.query.name;
-    }
-    const major = await majorRequirementsHandler.getMajorRequirements({
-      filters,
-    });
+    const major = await majorRequirementsHandler.getMajorRequirements(
+      req.query.name
+    );
     let response;
     if (major) {
       response = {

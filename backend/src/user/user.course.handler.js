@@ -16,6 +16,14 @@ export default class userCourseHandler {
     }
   }
 
+  static async updateMajor(major, netId) {
+    try {
+      return await User.updateOne({ netId: netId }, { major: major });
+    } catch (e) {
+      console.error(`Unable to post major ${e}`);
+      return { error: e };
+    }
+  }
   static async deleteCourse(netId, courseCode) {
     try {
       const deleteCourse = await User.updateOne(

@@ -8,9 +8,13 @@ import MajorProgress from "./components/MajorProgress";
 
 function App() {
   return (
+    // Setting up routes and elements
     <Routes>
+      {/* Wrapping each page around Layout element */}
       <Route element={<Layout />}>
+        {/* Login route at index */}
         <Route path="/" element={<Login />} />
+        {/* Protected Routes */}
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/progress" element={<MajorProgress />} />

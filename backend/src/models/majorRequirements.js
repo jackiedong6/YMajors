@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// MajorRequirements schema defining the structure of a major requirements document
 const MajorRequirementsSchema = new mongoose.Schema(
   {
     name: String,
@@ -12,6 +13,7 @@ const MajorRequirementsSchema = new mongoose.Schema(
   }
 );
 
+// Provides interfact to the database for CRUD operations
 const MajorRequirements = mongoose.model(
   "MajorRequirements",
   MajorRequirementsSchema

@@ -1,29 +1,23 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import { makeStyles } from "@material-ui/styles";
-import { Link } from "@mui/material";
 import Logout from "../Logout";
-import Logo from "./logo";
-
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
+import { useContext } from "react";
+import UserContext from "../../contexts/UserContext";
+import {
+  AppBar,
+  Box,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  Link,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  Button,
+} from "@mui/material";
 
 const drawerWidth = 240;
 const navItems = ["About"];
@@ -31,16 +25,102 @@ const navItems = ["About"];
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const { isAuthenticated } = useContext(UserContext);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const useStyles = makeStyles((theme) => ({
+    MuiToolbar: {
+      "@media (min-width: 600px)": {
+        minHeight: "10px !important",
+      },
+    },
+    LogoMobile: {
+      my: 2,
+      textDecoration: "none",
+    },
+    LogoNavbar: {
+      flexGrow: 1,
+      display: {
+        xs: "none",
+        sm: "block",
+        fontSize: 24,
+        color: "#fff",
+        textDecoration: "none",
+      },
+    },
+  }));
+  const classes = useStyles();
+  const NavbarLogo = () => {
+    if (isAuthenticated) {
+      return (
+        <Link
+          href="/home"
+          variant="h6"
+          sx={{
+            flexGrow: 1,
+            display: {
+              xs: "none",
+              sm: "block",
+              fontSize: 24,
+              color: "#fff",
+              textDecoration: "none",
+            },
+          }}
+        >
+          YMajor
+        </Link>
+      );
+    } else {
+      return (
+        <Link
+          href="/"
+          variant="h6"
+          sx={{
+            flexGrow: 1,
+            display: {
+              xs: "none",
+              sm: "block",
+              fontSize: 24,
+              color: "#fff",
+              textDecoration: "none",
+            },
+          }}
+        >
+          YMajor
+        </Link>
+      );
+    }
+  };
+
+  const DrawerLogo = () => {
+    if (isAuthenticated) {
+      return (
+        <Link
+          href="/home"
+          variant="h6"
+          sx={{ my: 2, textDecoration: "none", fontSize: 16 }}
+        >
+          YMajor
+        </Link>
+      );
+    } else {
+      return (
+        <Link
+          href="/"
+          variant="h6"
+          sx={{ color: "black", my: 2, textDecoration: "none", fontSize: 16 }}
+        >
+          YMajor
+        </Link>
+      );
+    }
+  };
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        YMajor
-      </Typography>
+      <DrawerLogo />
       <Divider />
       <List>
         {navItems.map((item) => (
@@ -57,15 +137,6 @@ export default function DrawerAppBar(props: Props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  const useStyles = makeStyles((theme) => ({
-    MuiToolbar: {
-      "@media (min-width: 600px)": {
-        minHeight: "10px !important",
-      },
-    },
-  }));
-
-  const classes = useStyles();
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar component="nav" sx={{ background: "#00356b", maxHeight: 40 }}>
@@ -79,7 +150,7 @@ export default function DrawerAppBar(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Logo />
+          <NavbarLogo />
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: "#fff" }}>

@@ -3,6 +3,10 @@ import majorRequirementsHandler from "./major.requirements.handler.js";
 
 const router = express.Router();
 
+/**
+ * Path to get major requirements
+ * Example http://{BACKEND_SERVER}/api/major/requirements?name="CPSC 323"
+ */
 router.get("/major/requirements", async function (req, res, next) {
   try {
     const major = await majorRequirementsHandler.getMajorRequirements(

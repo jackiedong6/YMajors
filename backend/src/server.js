@@ -8,16 +8,20 @@ import auth_routes from "./auth/auth.routes.js";
 import user_course_routes from "./user/user.course.routes.js";
 import major_requirement_routes from "./majorRequirements/major.requirements.routes.js";
 
+// Configurating the Cross-Origin Reserouce Sharing
+
 const corsOptions = {
   credentials: true,
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200,
 };
 
+// Express backend for web application
 const app = express();
 
 app.set("trust proxy", true);
 
+/////////////////////////////////////////////////////// Middleware //////////////////////////////////////////////////
 app.use(cors(corsOptions));
 
 app.use(
@@ -46,7 +50,7 @@ passportConfig(passport);
 app.use("/api", auth_routes);
 app.use("/api", major_requirement_routes);
 app.use("/api", user_course_routes);
-// app.use("/api/v1/coursesmart", courses)
-// app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
+
+///////////////////////////////////////////////////////End of Middleware//////////////////////////////////////////////////
 
 export default app;

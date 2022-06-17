@@ -2,8 +2,13 @@ import express from "express";
 import passport from "passport";
 import User from "../models/user.js";
 
+// Allows us to create routes specific to authentication
 const router = express.Router();
 
+/**
+ * Route path for seeing if a user is logged in -> Used to grant acess on the frontend
+ * If authentiated then return the authentication as true, their netid, courselist, and major
+ */
 router.get("/auth/check", (req, res) => {
   if (req.user) {
     console.log(req.user);
@@ -24,6 +29,9 @@ router.get("/auth/check", (req, res) => {
   }
 });
 
+/**
+ * Path for logging in using passport-cas2 authentication
+ */
 router.get(
   "/auth/cas",
   passport.authenticate("cas", { failureRedirect: "api/auth/login/failed" }),
@@ -33,13 +41,13 @@ router.get(
         return next(err);
       }
       return res.redirect("http://localhost:3000/home");
-
-      // INSTEAD OF JUST REDIRECTING, SET USER NETID ON A COOKIE
-      // RETRIEVE THE COOKIE FROM /auth/login/success
     });
   }
 );
 
+/**
+ * Path for when authentication via CAS fails
+ */
 router.get("/auth/login/failed", (req, res) => {
   res.status(401).json({
     success: false,
@@ -47,6 +55,9 @@ router.get("/auth/login/failed", (req, res) => {
   });
 });
 
+/**
+ * Logout route 
+ */
 router.get("/auth/logout", (req, res) => {
   req.logout(function (err) {
     if (err) {

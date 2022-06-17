@@ -68,14 +68,14 @@ function SearchBar({ placeholder, data, onChange }) {
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => {
             return (
-              <a
+              <div
                 className="dataItem"
                 target="_blank"
                 key={key}
                 onClick={() => handleClick(value.majorName)}
               >
                 <p>{value.majorName} </p>
-              </a>
+              </div>
             );
           })}
         </div>

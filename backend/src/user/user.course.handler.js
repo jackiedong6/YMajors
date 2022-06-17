@@ -2,12 +2,18 @@ import express from "express";
 import res from "express/lib/response.js";
 import User from "../models/user.js";
 
+/**
+ * Class for users to alter their courses
+ */
 export default class userCourseHandler {
-  static async addCourse(courseCode, netId) {
+  /**
+   * Adds course with name @param courseName to courselist of user with @param netId
+   */
+  static async addCourse(courseName, netId) {
     try {
       return await User.updateOne(
         { netId: netId },
-        { $addToSet: { courseList: courseCode } },
+        { $addToSet: { courseList: courseName } },
         { upsert: true }
       );
     } catch (e) {
@@ -16,6 +22,9 @@ export default class userCourseHandler {
     }
   }
 
+  /**
+   * Updates major with @param major to courselist of user with @param netId
+   */
   static async updateMajor(major, netId) {
     try {
       return await User.updateOne({ netId: netId }, { major: major });
@@ -24,13 +33,17 @@ export default class userCourseHandler {
       return { error: e };
     }
   }
-  static async deleteCourse(netId, courseCode) {
+
+  /**
+   * Deletes course with name @param courseName to courselist of user with @param netId
+   */
+  static async deleteCourse(netId, courseName) {
     try {
       const deleteCourse = await User.updateOne(
         { netId: netId },
         {
           $pullAll: {
-            courseList: [courseCode],
+            courseList: [courseName],
           },
         }
       );

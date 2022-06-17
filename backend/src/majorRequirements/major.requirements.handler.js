@@ -1,5 +1,8 @@
 import MajorRequirements from "../models/majorRequirements.js";
 
+/**
+ * Class handling API for retrieving majorrequirements from the database
+ */
 export default class majorRequirementsHandler {
   static async getMajorRequirements(majorName) {
     try {

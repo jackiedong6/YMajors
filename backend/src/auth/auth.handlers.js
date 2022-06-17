@@ -1,17 +1,20 @@
-import express from "express";
-import passport from "passport";
 import { Strategy as CasStrategy } from "passport-cas2";
 import User from "../models/user.js";
-import mongoose from "mongoose";
+
+/**
+ * Configures the passport for our express backend server
+ * @param {object} passport passport to be passed in to function
+ */
 
 export const passportConfig = async (passport) => {
+  // Utilizes CAS Strategy from passport-cas2 in order for students to login with Yale-CAS
   passport.use(
     new CasStrategy(
       {
         version: "CAS2.0",
         casURL: "https://secure.its.yale.edu/cas",
       },
-
+      // Callback function tries to find a user within our database. If not found create one
       async function (req, profile, done) {
         User.findOne({ netId: profile.id }, async (err, doc) => {
           if (err) throw err;
@@ -20,6 +23,7 @@ export const passportConfig = async (passport) => {
             const newUser = new User({
               netId: profile.id,
               major: "",
+              courseList: [],
             });
             await newUser.save();
             console.log("User Created");
@@ -30,10 +34,12 @@ export const passportConfig = async (passport) => {
     )
   );
 
+  // Serialize user for saving session
   passport.serializeUser((user, done) => {
     done(null, user);
   });
 
+  // Used to retrieve user from session
   passport.deserializeUser((user, done) => {
     done(null, user);
   });

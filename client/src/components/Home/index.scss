@@ -20,16 +20,46 @@
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     margin-bottom: 10px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.85);
   }
 
+  .ComponentCardCompleted {
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 10px;
+    background: linear-gradient(
+      to right,
+      #d7ffd0 100%,
+      #c0ffb5 100%,
+      #5aff91 100%,
+      #4fff34 100%
+    );
+  }
   .CourseCard {
     width: 100%;
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     margin-bottom: 10px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .CourseCardCompleted {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 10px;
+    background: linear-gradient(
+      to right,
+      #d7ffd0 100%,
+      #c0ffb5 100%,
+      #5aff91 100%,
+      #4fff34 100%
+    );
+    // background: linear-gradient(to right, #5aff91 100%, #7ffb6c 0%);
   }
 
   .ComponentFamilyCard {
@@ -37,8 +67,24 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     margin-bottom: 10px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.85);
   }
+
+  .ComponentFamilyCardCompleted {
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 10px;
+    background: linear-gradient(
+      to right,
+      #d7ffd0 100%,
+      #c0ffb5 100%,
+      #5aff91 100%,
+      #4fff34 100%
+    );
+    // background: linear-gradient(to right, #5aff91 0%, #4bff87 100%);
+  }
+
   .ComponentFamilyTitle {
     font-size: 22px !important;
     font-style: bold;

@@ -10,7 +10,7 @@ const Logout = () => {
   if (isAuthenticated) {
     return (
       <Button
-        sx={{ color: "#fff" }}
+        sx={{ color: "#fff", fontSize: 20 }}
         className="logout"
         onClick={() =>
           axios.get("/auth/logout").then(({ data }) => {

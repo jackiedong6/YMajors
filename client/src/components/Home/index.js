@@ -28,7 +28,7 @@ const Home = () => {
   const [checkedCourses, setCheckedCourses] = useState(courseList);
   const [componentLimit, setComponentLimit] = useState([]);
   const [componentFamilyLimit, setComponentFamilyLimit] = useState([]);
-
+  const [isLoadingData, setIsLoadingData] = useState(true);
   /**
    * updates the checked courses, the database, as well as the limits for both components and componentfamilys
    * @param checkedCourse is the course that is being checkedd
@@ -157,18 +157,15 @@ const Home = () => {
                   newUserCourseList.push(course);
                 }
               });
-
               // Add to the checked array for components
               newCheckedComponentList.push({
                 checked: newUserCourseList,
                 limit: courseLimit,
               });
-
               if (newUserCourseList.length === courseLimit) {
                 newComponentFamilyList.push(component.component_name);
               }
             });
-
             newCheckedComponentFamilyList.push({
               checkedComponentFamily: newComponentFamilyList,
               limit: componentFamilyLimit,
@@ -176,6 +173,7 @@ const Home = () => {
           });
           setComponentLimit(newCheckedComponentList);
           setComponentFamilyLimit(newCheckedComponentFamilyList);
+          setIsLoadingData(false);
         }
       })
       .catch((e) => {
@@ -193,7 +191,14 @@ const Home = () => {
         {requiredCourses.map((course, index) => {
           return (
             <Grid key={index + course} item xs={6} lg={4} xl={4}>
-              <Card className="CourseCard" variant="outlined">
+              <Card
+                className={
+                  checkedCourses.includes(course)
+                    ? "CourseCardCompleted"
+                    : "CourseCard"
+                }
+                variant="outlined"
+              >
                 <CardHeader
                   action={
                     <Checkbox
@@ -257,7 +262,15 @@ const Home = () => {
               lg={4}
               xl={2}
             >
-              <Card className="ComponentCard" variant="outlined">
+              <Card
+                className={
+                  componentLimit[temp_index].checked.length >=
+                  componentLimit[temp_index].limit
+                    ? "ComponentCardCompleted"
+                    : "ComponentCard"
+                }
+                variant="outlined"
+              >
                 <CardContent>
                   <Typography
                     className="ComponentTitle"
@@ -292,7 +305,12 @@ const Home = () => {
             return (
               <Card
                 key={index + componentFamily.component_family_name}
-                className="ComponentFamilyCard"
+                className={
+                  componentFamilyLimit[index].checkedComponentFamily.length >=
+                  componentFamilyLimit[index].limit
+                    ? "ComponentFamilyCardCompleted"
+                    : "ComponentFamilyCard"
+                }
                 variant="outlined"
               >
                 <CardContent>
@@ -325,7 +343,8 @@ const Home = () => {
       />
       <div className="mui-grid">
         {Array.isArray(majorData.majorComponentFamilies) &&
-        majorData.majorComponentFamilies.length > 0 ? (
+        majorData.majorComponentFamilies.length > 0 &&
+        !isLoadingData ? (
           <>
             <h1>
               {majorData.majorName} ({majorData.majorCode})

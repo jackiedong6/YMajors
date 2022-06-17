@@ -33,7 +33,7 @@ export default function DrawerAppBar(props: Props) {
   const useStyles = makeStyles((theme) => ({
     MuiToolbar: {
       "@media (min-width: 600px)": {
-        minHeight: "10px !important",
+        minHeight: "64px !important",
       },
     },
     LogoMobile: {
@@ -63,7 +63,7 @@ export default function DrawerAppBar(props: Props) {
             display: {
               xs: "none",
               sm: "block",
-              fontSize: 24,
+              fontSize: 36,
               color: "#fff",
               textDecoration: "none",
             },
@@ -139,7 +139,7 @@ export default function DrawerAppBar(props: Props) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar component="nav" sx={{ background: "#00356b", maxHeight: 40 }}>
+      <AppBar component="nav" sx={{ background: "#00356b", maxHeight: 64 }}>
         <Toolbar className={classes.MuiToolbar}>
           <IconButton
             color="inherit"
@@ -153,7 +153,7 @@ export default function DrawerAppBar(props: Props) {
           <NavbarLogo />
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
+              <Button key={item} sx={{ color: "#fff", fontSize: 20 }}>
                 {item}
               </Button>
             ))}

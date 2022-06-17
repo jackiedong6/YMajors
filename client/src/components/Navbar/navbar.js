@@ -12,10 +12,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import "./index.scss";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "@mui/material";
 import Logout from "../Logout";
+import Logo from "./logo";
 
 interface Props {
   /**
@@ -79,22 +79,7 @@ export default function DrawerAppBar(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Link
-            href="/"
-            variant="h6"
-            sx={{
-              flexGrow: 1,
-              display: {
-                xs: "none",
-                sm: "block",
-                fontSize: 24,
-                color: "#fff",
-                textDecoration: "none",
-              },
-            }}
-          >
-            YMajor
-          </Link>
+          <Logo />
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: "#fff" }}>

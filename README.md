@@ -4,7 +4,8 @@
 
 First, **download the repository into your machine**. One way to download the repository into your machine is to click “Code” on the upper right and then “Download Zip”. You can find information on how to do so [here](https://www.youtube.com/watch?v=_8Dc-K39DLQ&ab_channel=TechSeymur).
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8142553d-96cd-4d7f-860c-cf427dffbb46/Untitled.png)
+<img width="415" alt="image" src="https://user-images.githubusercontent.com/70814599/174687363-906abea6-3c0a-454b-95ca-819b5d795f6d.png">
+
 
 # How to Run in Your Local Machine?
 
@@ -28,7 +29,7 @@ You will see that the project is split into two main folders: `backend` and `cli
 
 You should see the following:
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7c6dbf82-67c1-47ca-b3ff-042d71a860bb/Untitled.png)
+<img width="873" alt="image" src="https://user-images.githubusercontent.com/70814599/174687397-644c1a5d-dacd-4ff0-99a5-79a47c20d196.png">
 
 ## Frontend
 

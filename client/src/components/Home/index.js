@@ -29,6 +29,8 @@ const Home = () => {
   const [componentLimit, setComponentLimit] = useState([]);
   const [componentFamilyLimit, setComponentFamilyLimit] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
+
+  
   /**
    * updates the checked courses, the database, as well as the limits for both components and componentfamilys
    * @param checkedCourse is the course that is being checkedd

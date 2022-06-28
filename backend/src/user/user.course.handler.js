@@ -13,7 +13,7 @@ export default class userCourseHandler {
     try {
       return await User.updateOne(
         { netId: netId },
-        { $addToSet: { courseList: courseName } },
+        { $addToSet: { courseList: courseName }, $inc: { creditsApplied: 1 } },
         { upsert: true }
       );
     } catch (e) {
@@ -44,6 +44,9 @@ export default class userCourseHandler {
         {
           $pullAll: {
             courseList: [courseName],
+          },
+          $inc: {
+            creditsApplied: -1,
           },
         }
       );

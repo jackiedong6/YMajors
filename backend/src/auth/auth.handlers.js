@@ -17,13 +17,17 @@ export const passportConfig = async (passport) => {
       // Callback function tries to find a user within our database. If not found create one
       async function (req, profile, done) {
         User.findOne({ netId: profile.id }, async (err, doc) => {
+          const matrix = new Array(9).fill(0).map(() => new Array(8).fill(""));
           if (err) throw err;
           if (doc) console.log("Existing User");
           if (!doc) {
             const newUser = new User({
               netId: profile.id,
               major: "",
+              emailAddress: "",
+              creditsApplied: 0,
               courseList: [],
+              semesterList: matrix,
             });
             await newUser.save();
             console.log("User Created");

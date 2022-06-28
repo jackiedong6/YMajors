@@ -1,11 +1,18 @@
 import mongoose from "mongoose";
 
 // UserSchema defining the document structure of a user
+const semester = new mongoose.Schema({
+  courses: Array,
+});
+
 const UserSchema = new mongoose.Schema(
   {
     netId: String,
     major: String,
+    emailAddress: String,
+    creditsApplied: Number,
     courseList: Array,
+    semesterList: [Array],
   },
   {
     versionKey: false,

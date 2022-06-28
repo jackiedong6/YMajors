@@ -20,7 +20,10 @@ router.get("/auth/check", (req, res) => {
           auth: true,
           user: req.user,
           courseList: docs.courseList,
+          semesterList: docs.semesterList,
           major: docs.major,
+          creditsApplied: docs.creditsApplied,
+          emailAddress: docs.emailAddress,
         });
       }
     });
@@ -56,7 +59,7 @@ router.get("/auth/login/failed", (req, res) => {
 });
 
 /**
- * Logout route 
+ * Logout route
  */
 router.get("/auth/logout", (req, res) => {
   req.logout(function (err) {

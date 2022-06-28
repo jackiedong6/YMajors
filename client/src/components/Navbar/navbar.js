@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 
 const drawerWidth = 240;
-const navItems = ["About"];
+const navItems = ["About", "Progress"];
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;

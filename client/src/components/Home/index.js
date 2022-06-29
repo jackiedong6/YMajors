@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Masonry } from "@mui/lab";
 import UserCourseService from "../../services/UserCourseList.js";
+import { v4 as uuid } from "uuid";
 
 const Home = () => {
   const { courseList } = useContext(UserContext);
@@ -30,7 +31,6 @@ const Home = () => {
   const [componentFamilyLimit, setComponentFamilyLimit] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
-  
   /**
    * updates the checked courses, the database, as well as the limits for both components and componentfamilys
    * @param checkedCourse is the course that is being checkedd
@@ -182,6 +182,7 @@ const Home = () => {
         console.log(e);
       });
   };
+
   const renderCourseRequirements = (
     requiredCourses,
     componentIndex,
@@ -189,11 +190,12 @@ const Home = () => {
     componentFamilyName
   ) => {
     return (
-      <Grid container spacing={1}>
+      <Grid container spacing={1} key={[uuid()]}>
         {requiredCourses.map((course, index) => {
           return (
-            <Grid key={index + course} item xs={6} lg={4} xl={4}>
+            <Grid key={[uuid()]} item xs={6} lg={4} xl={4}>
               <Card
+                key={[uuid()]}
                 className={
                   checkedCourses.includes(course)
                     ? "CourseCardCompleted"
@@ -202,6 +204,7 @@ const Home = () => {
                 variant="outlined"
               >
                 <CardHeader
+                  key={[uuid()]}
                   action={
                     <Checkbox
                       name={course}
@@ -225,6 +228,7 @@ const Home = () => {
                   }
                   title={
                     <Typography
+                      key={[uuid()]}
                       className="CourseTitle"
                       color="textSecondary"
                       gutterBottom
@@ -233,7 +237,7 @@ const Home = () => {
                     </Typography>
                   }
                 ></CardHeader>
-                <CardContent className="content"></CardContent>
+                <CardContent key={[uuid()]} className="content"></CardContent>
               </Card>
             </Grid>
           );
@@ -251,20 +255,15 @@ const Home = () => {
         direction="column"
         alignItems="center"
         justifyContent="center"
+        key={[uuid()]}
       >
         {components.map((component, index) => {
           var temp_index = componentCount;
           componentCount = componentCount + 1;
           return (
-            <Grid
-              key={index + component.component_name}
-              item
-              className="grid"
-              xs={12}
-              lg={4}
-              xl={2}
-            >
+            <Grid key={[uuid()]} item className="grid" xs={12} lg={4} xl={2}>
               <Card
+                key={[uuid()]}
                 className={
                   componentLimit[temp_index].checked.length >=
                   componentLimit[temp_index].limit
@@ -273,15 +272,20 @@ const Home = () => {
                 }
                 variant="outlined"
               >
-                <CardContent>
+                <CardContent key={[uuid()]}>
                   <Typography
+                    key={[uuid()]}
                     className="ComponentTitle"
                     color="textSecondary"
                     gutterBottom
                   >
                     {component.component_name}
                   </Typography>
-                  <Typography className="pos" color="textSecondary">
+                  <Typography
+                    key={[uuid()]}
+                    className="pos"
+                    color="textSecondary"
+                  >
                     Required # of Courses: {component.required_num_courses}
                   </Typography>
                   {renderCourseRequirements(
@@ -301,12 +305,12 @@ const Home = () => {
 
   const renderComponentFamilies = (majorComponentFamilies) => {
     return (
-      <Masonry className="masonry" columns={3} spacing={2}>
+      <Masonry className="masonry" columns={3} spacing={2} key={[uuid()]}>
         {majorComponentFamilies.map((componentFamily, index) => {
           if (componentFamily.component_list.length > 1)
             return (
               <Card
-                key={index + componentFamily.component_family_name}
+                key={[uuid()]}
                 className={
                   componentFamilyLimit[index].checkedComponentFamily.length >=
                   componentFamilyLimit[index].limit
@@ -315,15 +319,20 @@ const Home = () => {
                 }
                 variant="outlined"
               >
-                <CardContent>
+                <CardContent key={[uuid()]}>
                   <Typography
+                    key={[uuid()]}
                     className="ComponentFamilyTitle"
                     color="textSecondary"
                     gutterBottom
                   >
                     {componentFamily.component_family_name}
                   </Typography>
-                  <Typography className="pos" color="textSecondary">
+                  <Typography
+                    key={[uuid()]}
+                    className="pos"
+                    color="textSecondary"
+                  >
                     Required # of Components :{" "}
                     {componentFamily.required_num_components}
                   </Typography>
@@ -331,7 +340,11 @@ const Home = () => {
                 </CardContent>
               </Card>
             );
-          return <>{renderComponents(componentFamily.component_list, index)}</>;
+          return (
+            <div key={[uuid()]}>
+              {renderComponents(componentFamily.component_list, index)}
+            </div>
+          );
         })}
       </Masonry>
     );
@@ -339,6 +352,7 @@ const Home = () => {
   return (
     <div className="container home">
       <SearchBar
+        key={[uuid()]}
         placeholder="Enter Major Name ..."
         data={MajorNames}
         onChange={(value) => getData(value)}
@@ -348,9 +362,7 @@ const Home = () => {
         majorData.majorComponentFamilies.length > 0 &&
         !isLoadingData ? (
           <>
-            <h1>
-              {majorData.majorName} ({majorData.majorCode})
-            </h1>
+            <h1>{majorData.majorName} </h1>
             {renderComponentFamilies(majorData.majorComponentFamilies)}
           </>
         ) : (

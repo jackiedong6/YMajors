@@ -8,6 +8,7 @@ const UserContextProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState();
   const [courseList, setCourseList] = useState();
+  const [semesterList, setSemesterList] = useState();
   const [userMajor, setMajor] = useState();
   const checkContext = useCallback(() => {
     axios
@@ -17,12 +18,14 @@ const UserContextProvider = ({ children }) => {
           setIsAuthenticated(true);
           setUser(data.user);
           setCourseList(data.courseList);
+          setSemesterList(data.semesterList);
           setMajor(data.major);
           setIsLoading(false);
         } else {
           setIsAuthenticated(false);
           setMajor(undefined);
           setCourseList(undefined);
+          setSemesterList(undefined);
           setUser(undefined);
           setIsLoading(false);
         }
@@ -45,6 +48,7 @@ const UserContextProvider = ({ children }) => {
         isAuthenticated,
         user,
         courseList,
+        semesterList,
         userMajor,
         checkContext,
       }}

@@ -1,5 +1,6 @@
 import express from "express";
 import res from "express/lib/response.js";
+import mongoose from "mongoose";
 import User from "../models/user.js";
 
 /**
@@ -22,6 +23,22 @@ export default class userCourseHandler {
     }
   }
 
+  static async addCourseToSemester(courseName, semesterNumber, netId) {
+    const mongooseLink = "semesterList." + semesterNumber;
+    try {
+      return await User.updateOne(
+        { nedId: netId },
+        {
+          $addToSet: {
+            [mongooseLink]: courseName,
+          },
+        }
+      );
+    } catch (e) {
+      console.error(`Unable to post semesterCourse: ${e}`);
+      return { error: e };
+    }
+  }
   /**
    * Updates major with @param major to courselist of user with @param netId
    */
@@ -53,6 +70,20 @@ export default class userCourseHandler {
       return deleteCourse;
     } catch (e) {
       console.error(`Unable to delete course: ${e}`);
+      return { error: e };
+    }
+  }
+
+  static async deleteCourseFromSemester(courseName, semesterNumber, netId) {
+    const mongooseLink = "semesterList." + semesterNumber;
+    console.log(mongooseLink);
+    try {
+      return await User.updateOne(
+        { nedId: netId },
+        { $pull: { [mongooseLink]: courseName } }
+      );
+    } catch (e) {
+      console.error(`Unable to post semesterCourse: ${e}`);
       return { error: e };
     }
   }

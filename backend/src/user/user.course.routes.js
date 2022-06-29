@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/user/courses", async function (req, res, next) {
   try {
     const courseCode = req.body.text;
+    console.log(courseCode);
     await userCourseHandler.addCourse(courseCode, req.user);
     res.json({ status: "success" });
   } catch (e) {
@@ -44,4 +45,35 @@ router.post("/user/major", async function (req, res, next) {
   }
 });
 
+router.post("/user/courses/semester", async function (req, res, next) {
+  try {
+    const courseCode = req.query.name;
+    const semester = parseInt(req.query.semester);
+    console.log(courseCode, semester);
+    const updateSemesterList = await userCourseHandler.addCourseToSemester(
+      courseCode,
+      semester,
+      req.user
+    );
+    console.log(updateSemesterList);
+    res.json({ status: "success", new_semester: { semester, courseCode } });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+router.delete("/user/courses/semester", async function (req, res, next) {
+  try {
+    const courseCode = req.query.name;
+    const semester = parseInt(req.query.semester);
+    const updateSemesterList = await userCourseHandler.deleteCourseFromSemester(
+      courseCode,
+      semester,
+      req.user
+    );
+    res.json({ status: "success", new_semester: { semester, courseCode } });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 export default router;

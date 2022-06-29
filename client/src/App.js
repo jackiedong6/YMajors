@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
 import MajorProgress from "./components/MajorProgress";
-
+import Semester from "./components/Semester";
 function App() {
   return (
     // Setting up routes and elements
@@ -18,6 +18,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/progress" element={<MajorProgress />} />
+          <Route path="/semester" element={<Semester />} />
         </Route>
       </Route>
     </Routes>

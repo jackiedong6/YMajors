@@ -12,10 +12,10 @@ export default class userCourseHandler {
    */
   static async addCourse(courseName, netId) {
     try {
-      return await User.updateOne(
+      return await User.findOneAndUpdate(
         { netId: netId },
         { $addToSet: { courseList: courseName }, $inc: { creditsApplied: 1 } },
-        { upsert: true }
+        { upsert: true, returnOriginal: false }
       );
     } catch (e) {
       console.error(`Unable to post course: ${e}`);

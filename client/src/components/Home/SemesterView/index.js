@@ -9,7 +9,6 @@ import UserCourseService from "../../../services/UserCourseList.js";
 const Semester = () => {
   const { courseList, semesterList } = useContext(UserContext);
   const flattenedSemesterList = [];
-
   const itemsFromBackend = [];
 
   semesterList.forEach((semester) => {
@@ -165,7 +164,7 @@ const Semester = () => {
                 .slice(1)
                 .map(([columnId, column], index) => {
                   return (
-                    <Grid item xs={4} sm={4} md={4} key={index}>
+                    <Grid item xs={4} sm={5} md={4} lg={4} key={index}>
                       <div key={columnId}>
                         <h2>{column.name}</h2>
                         <div style={{ margin: 8 }}>

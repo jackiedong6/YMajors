@@ -16,8 +16,8 @@ import { Masonry } from "@mui/lab";
 import UserCourseService from "../../../services/UserCourseList.js";
 import { v4 as uuid } from "uuid";
 
-const Home = () => {
-  const { courseList } = useContext(UserContext);
+const CardView = () => {
+  const { courseList, semesterList } = useContext(UserContext);
 
   const initialMajorState = {
     majorName: "",
@@ -61,6 +61,7 @@ const Home = () => {
     if (difference.length > 0) {
       // Add the course to the databas
       UserCourseService.add(checkedCourse);
+      // setCourseList(data);
       // Add the course to the checked list for that component
       updatedComponentLimit[componentIndex].checked.push(checkedCourse);
       // if that component is now satisfied then we want to add that to the component family's satisfied components
@@ -77,6 +78,13 @@ const Home = () => {
     else {
       // Delete the course from our database
       UserCourseService.delete(checkedCourse);
+      semesterList.forEach((semester, index) => {
+        semester.forEach((course) => {
+          if (course === checkedCourse) {
+            UserCourseService.deleteCourseFromSemester(checkedCourse, index);
+          }
+        });
+      });
 
       // Add the course to the updatedComponentLimit array at the component index where course lies
       updatedComponentLimit[componentIndex].checked.pop(checkedCourse);
@@ -373,4 +381,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default CardView;

@@ -9,9 +9,8 @@ const router = express.Router();
 router.post("/user/courses", async function (req, res, next) {
   try {
     const courseCode = req.body.text;
-    console.log(courseCode);
-    await userCourseHandler.addCourse(courseCode, req.user);
-    res.json({ status: "success" });
+    const data = await userCourseHandler.addCourse(courseCode, req.user);
+    res.json({ courseList: data.courseList });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

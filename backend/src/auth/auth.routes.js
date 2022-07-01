@@ -11,7 +11,6 @@ const router = express.Router();
  */
 router.get("/auth/check", (req, res) => {
   if (req.user) {
-    console.log(req.user);
     User.findOne({ netId: req.user }, function (err, docs) {
       if (err) {
         console.log(err);

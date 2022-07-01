@@ -50,6 +50,7 @@ const UserContextProvider = ({ children }) => {
         courseList,
         semesterList,
         userMajor,
+        setCourseList,
         checkContext,
       }}
     >

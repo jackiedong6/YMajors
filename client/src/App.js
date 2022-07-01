@@ -3,8 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import Semester from "./components/SemesterView";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
+
 function App() {
+
+
   return (
     // Setting up routes and elements
     <Routes>
@@ -15,6 +19,7 @@ function App() {
         {/* Protected Routes */}
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
+          <Route path="semester" element={<Semester />}></Route>
         </Route>
       </Route>
     </Routes>

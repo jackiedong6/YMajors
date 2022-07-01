@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import MajorDataService from "../../services/MajorRequirements.js";
 import SearchBar from "./SearchBar";
 import MajorNames from "../../data/data.json";
 import UserContext from "../../contexts/UserContext";
+import Progress from "../Progress/Progress.js";
+
 import "./index.scss";
 import {
   CardContent,
@@ -29,6 +31,8 @@ const Home = () => {
   const [componentLimit, setComponentLimit] = useState([]);
   const [componentFamilyLimit, setComponentFamilyLimit] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
+  const [majorProgress, setMajorProgress] = useState(0);
+
   /**
    * updates the checked courses, the database, as well as the limits for both components and componentfamilys
    * @param checkedCourse is the course that is being checkedd
@@ -241,6 +245,8 @@ const Home = () => {
   };
 
   var componentCount = 0;
+
+
   const renderComponents = (components, componentFamilyIndex) => {
     return (
       <Grid
@@ -296,6 +302,46 @@ const Home = () => {
       </Grid>
     );
   };
+  var componentCount2 = 0
+  var index2 = 0
+  const countRequirementsSatisfied = (majorComponentFamilies) => {
+
+    // store number of requirements
+    var numOfRequirements = majorComponentFamilies.length
+
+    // store number of requirements satisfied
+    var numOfRequirementsSatisfied = 0 
+    // console.log(majorComponentFamilies)
+
+    // count component family requirements satisfied (recall each "big" card depicts EITHER a component family or a component)
+    majorComponentFamilies.map((componentFamily, index) => {
+      // console.log(componentFamilyLimit[index2])
+      var temp_index2 = index2;
+      // console.log("index: ", index2)
+      if (componentFamily.component_list.length >= 1) {
+        if (componentFamilyLimit[index2].checkedComponentFamily.length ==
+          componentFamilyLimit[index2].limit)
+          {
+            // console.log("checkedcomponentfamily:",componentFamilyLimit[index2].checkedComponentFamily)
+            // console.log("below is a component family")
+            // console.log(componentFamily)
+            
+            numOfRequirementsSatisfied++
+          }
+      
+      }
+      index2 = index2 + 1;
+    })
+
+      console.log("num satisfied: ", numOfRequirementsSatisfied)
+      console.log("total num of reqs: ",numOfRequirements )
+      setMajorProgress(100*numOfRequirementsSatisfied/numOfRequirements)
+      // setMajorProgress(100*numOfRequirementsSatisfied/numOfRequirements)
+      // console.log(majorProgress)
+      
+  }
+
+
 
   const renderComponentFamilies = (majorComponentFamilies) => {
     return (
@@ -334,13 +380,21 @@ const Home = () => {
       </Masonry>
     );
   };
-  return (
+
+  useEffect(() => {
+    countRequirementsSatisfied(majorData.majorComponentFamilies)
+    // console.log(majorProgress)
+  });
+
+  return ( 
     <div className="container home">
       <SearchBar
         placeholder="Enter Major Name ..."
         data={MajorNames}
         onChange={(value) => getData(value)}
       />
+      <Progress done={majorProgress}/>      
+
       <div className="mui-grid">
         {Array.isArray(majorData.majorComponentFamilies) &&
         majorData.majorComponentFamilies.length > 0 &&
@@ -349,8 +403,8 @@ const Home = () => {
             <h1>
               {majorData.majorName} ({majorData.majorCode})
             </h1>
-            {renderComponentFamilies(majorData.majorComponentFamilies)}
-          </>
+            {renderComponentFamilies(majorData.majorComponentFamilies)}    
+          </> 
         ) : (
           <></>
         )}

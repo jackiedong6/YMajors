@@ -33,6 +33,8 @@ const Home = () => {
   } else {
     view = <SemesterView />;
   }
+
+  
   return (
     <>
       <ToggleButton

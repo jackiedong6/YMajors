@@ -14,8 +14,6 @@ import {
 } from "@mui/material";
 import { Masonry } from "@mui/lab";
 import UserCourseService from "../../../services/UserCourseList.js";
-import { v4 as uuid } from "uuid";
-
 const CardView = () => {
   const { courseList, semesterList } = useContext(UserContext);
 
@@ -198,12 +196,11 @@ const CardView = () => {
     componentFamilyName
   ) => {
     return (
-      <Grid container spacing={1} key={[uuid()]}>
+      <Grid container spacing={1}>
         {requiredCourses.map((course, index) => {
           return (
-            <Grid key={[uuid()]} item xs={6} lg={4} xl={4}>
+            <Grid key={index + course} item xs={6} lg={4} xl={4}>
               <Card
-                key={[uuid()]}
                 className={
                   checkedCourses.includes(course)
                     ? "CourseCardCompleted"
@@ -212,7 +209,6 @@ const CardView = () => {
                 variant="outlined"
               >
                 <CardHeader
-                  key={[uuid()]}
                   action={
                     <Checkbox
                       name={course}
@@ -236,7 +232,6 @@ const CardView = () => {
                   }
                   title={
                     <Typography
-                      key={[uuid()]}
                       className="CourseTitle"
                       color="textSecondary"
                       gutterBottom
@@ -245,7 +240,7 @@ const CardView = () => {
                     </Typography>
                   }
                 ></CardHeader>
-                <CardContent key={[uuid()]} className="content"></CardContent>
+                <CardContent className="content"></CardContent>
               </Card>
             </Grid>
           );
@@ -263,15 +258,20 @@ const CardView = () => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        key={[uuid()]}
       >
         {components.map((component, index) => {
           var temp_index = componentCount;
           componentCount = componentCount + 1;
           return (
-            <Grid key={[uuid()]} item className="grid" xs={12} lg={4} xl={2}>
+            <Grid
+              key={index + component.component_name}
+              item
+              className="grid"
+              xs={12}
+              lg={4}
+              xl={2}
+            >
               <Card
-                key={[uuid()]}
                 className={
                   componentLimit[temp_index].checked.length >=
                   componentLimit[temp_index].limit
@@ -280,20 +280,15 @@ const CardView = () => {
                 }
                 variant="outlined"
               >
-                <CardContent key={[uuid()]}>
+                <CardContent>
                   <Typography
-                    key={[uuid()]}
                     className="ComponentTitle"
                     color="textSecondary"
                     gutterBottom
                   >
                     {component.component_name}
                   </Typography>
-                  <Typography
-                    key={[uuid()]}
-                    className="pos"
-                    color="textSecondary"
-                  >
+                  <Typography className="pos" color="textSecondary">
                     Required # of Courses: {component.required_num_courses}
                   </Typography>
                   {renderCourseRequirements(
@@ -313,12 +308,12 @@ const CardView = () => {
 
   const renderComponentFamilies = (majorComponentFamilies) => {
     return (
-      <Masonry className="masonry" columns={3} spacing={2} key={[uuid()]}>
+      <Masonry className="masonry" columns={3} spacing={2}>
         {majorComponentFamilies.map((componentFamily, index) => {
           if (componentFamily.component_list.length > 1)
             return (
               <Card
-                key={[uuid()]}
+                key={index + componentFamily.component_family_name}
                 className={
                   componentFamilyLimit[index].checkedComponentFamily.length >=
                   componentFamilyLimit[index].limit
@@ -327,20 +322,15 @@ const CardView = () => {
                 }
                 variant="outlined"
               >
-                <CardContent key={[uuid()]}>
+                <CardContent>
                   <Typography
-                    key={[uuid()]}
                     className="ComponentFamilyTitle"
                     color="textSecondary"
                     gutterBottom
                   >
                     {componentFamily.component_family_name}
                   </Typography>
-                  <Typography
-                    key={[uuid()]}
-                    className="pos"
-                    color="textSecondary"
-                  >
+                  <Typography className="pos" color="textSecondary">
                     Required # of Components :{" "}
                     {componentFamily.required_num_components}
                   </Typography>
@@ -349,7 +339,7 @@ const CardView = () => {
               </Card>
             );
           return (
-            <div key={[uuid()]}>
+            <div key={Math.random()}>
               {renderComponents(componentFamily.component_list, index)}
             </div>
           );
@@ -360,7 +350,6 @@ const CardView = () => {
   return (
     <div className="container home">
       <SearchBar
-        key={[uuid()]}
         placeholder="Enter Major Name ..."
         data={MajorNames}
         onChange={(value) => getData(value)}
@@ -370,7 +359,7 @@ const CardView = () => {
         majorData.majorComponentFamilies.length > 0 &&
         !isLoadingData ? (
           <>
-            <h1>{majorData.majorName} </h1>
+            <h1>{majorData.majorName}</h1>
             {renderComponentFamilies(majorData.majorComponentFamilies)}
           </>
         ) : (
